@@ -4,7 +4,76 @@
 module questionnaire2form;
 create OUT: fo from IN: qu;
 
+-- TODO: FIX
+helper def : id : Integer = 0;
+helper context Integer def: inc() : Integer = self + 1;
+
 rule Questionnaire2Form {
 	from q: qu!Questionnaire
-	to f: fo!Form ()
+	to f: fo!Form (
+		pages <- q.questionGroups
+	)
 }
+
+rule QuestionGroup2Page {
+	from qg: qu!QuestionGroup
+	to p: fo!Page(
+		title <- qg.name,
+		elements <- qg.questions,
+		allNextPages <- p.refImmediateComposite().pages ->
+						select(q | q.refImmediateComposite().pages -> asSequence() -> indexOf(q)  >
+								   q.refImmediateComposite().pages -> asSequence() -> indexOf(p)),
+		allPreviousPages <- p.refImmediateComposite().pages ->
+						select(q | q.refImmediateComposite().pages -> asSequence() -> indexOf(q)  <
+								   q.refImmediateComposite().pages -> asSequence() -> indexOf(p)),
+								   
+		previousPage <- p.allPreviousPages.last(),
+		nextPage <- p.allNextPages.first()
+	)
+}
+
+
+
+rule OpenEndedQuestion_SL_2TextField {
+	from o: qu!OpenEndedQuestion (o.multiline = false)
+	to tf: fo!TextField(
+		elementId <- thisModule.id.inc().toString(),
+		label <- o.text
+	)
+}
+
+rule OpenEndedQuestion_ML_2TextArea {
+	from o: qu!OpenEndedQuestion (o.multiline = true)
+	to tf: fo!TextArea(
+		elementId <- thisModule.id.inc().toString(),
+		label <- o.text
+	)
+}
+
+rule ClosedEndedQuestion_MA_2SelectionField {
+	from c: qu!ClosedEndedQuestion (c.answers.size() > 1)
+	to sf: fo!SelectionField (
+		elementId <- thisModule.id.inc().toString(),
+		label <- c.text,
+		selectionFieldType <- #Checkbox,
+		items <- c.answers
+	)
+}
+
+rule ClosedEndedQuestion_SA_2SelectionField {
+	from c: qu!ClosedEndedQuestion (c.answers.size() = 1)
+	to sf: fo!SelectionField (
+		elementId <- thisModule.id.inc().toString(),
+		label <- c.text,
+		selectionFieldType <- #Radio,
+		items <- c.answers
+	)
+}
+
+rule Answer2SelectionItem {
+	from a: qu!Answer
+	to si: fo!SelectionItem (
+		label <- a.text
+	)
+}
+
