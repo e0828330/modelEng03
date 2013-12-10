@@ -4,7 +4,6 @@
 module questionnaire2form;
 create OUT: fo from IN: qu;
 
--- TODO: FIX
 helper def : id : Integer = 0;
 helper context Integer def: inc() : Integer = self + 1;
 
@@ -21,11 +20,11 @@ rule QuestionGroup2Page {
 		title <- qg.name,
 		elements <- qg.questions,
 		allNextPages <- p.refImmediateComposite().pages ->
-						select(q | q.refImmediateComposite().pages -> asSequence() -> indexOf(q)  >
-								   q.refImmediateComposite().pages -> asSequence() -> indexOf(p)),
+						select(q | q.refImmediateComposite().pages -> indexOf(q)  >
+								   q.refImmediateComposite().pages -> indexOf(p)),
 		allPreviousPages <- p.refImmediateComposite().pages ->
-						select(q | q.refImmediateComposite().pages -> asSequence() -> indexOf(q)  <
-								   q.refImmediateComposite().pages -> asSequence() -> indexOf(p)),
+						select(q | q.refImmediateComposite().pages -> indexOf(q)  <
+								   q.refImmediateComposite().pages -> indexOf(p)),
 								   
 		previousPage <- p.allPreviousPages.last(),
 		nextPage <- p.allNextPages.first()
@@ -37,43 +36,60 @@ rule QuestionGroup2Page {
 rule OpenEndedQuestion_SL_2TextField {
 	from o: qu!OpenEndedQuestion (o.multiline = false)
 	to tf: fo!TextField(
-		elementId <- thisModule.id.inc().toString(),
-		label <- o.text
+		label <- o.text,
+		mandatory <- o.mandatory
 	)
+	do {
+		thisModule.id <- thisModule.id.inc();
+		tf.elementId <- thisModule.id.toString();
+	}
 }
 
 rule OpenEndedQuestion_ML_2TextArea {
 	from o: qu!OpenEndedQuestion (o.multiline = true)
-	to tf: fo!TextArea(
-		elementId <- thisModule.id.inc().toString(),
-		label <- o.text
+	to ta: fo!TextArea(
+		label <- o.text,
+		mandatory <- o.mandatory
 	)
+	do {
+		thisModule.id <- thisModule.id.inc();
+		ta.elementId <- thisModule.id.toString();
+	}
 }
 
 rule ClosedEndedQuestion_MA_2SelectionField {
 	from c: qu!ClosedEndedQuestion (c.answers.size() > 1)
 	to sf: fo!SelectionField (
-		elementId <- thisModule.id.inc().toString(),
 		label <- c.text,
 		selectionFieldType <- #Checkbox,
 		items <- c.answers
 	)
+	do {
+		thisModule.id <- thisModule.id.inc();
+		sf.elementId <- thisModule.id.toString();
+	}
 }
 
 rule ClosedEndedQuestion_SA_2SelectionField {
 	from c: qu!ClosedEndedQuestion (c.answers.size() = 1)
 	to sf: fo!SelectionField (
-		elementId <- thisModule.id.inc().toString(),
 		label <- c.text,
 		selectionFieldType <- #Radio,
 		items <- c.answers
 	)
+	do {
+		thisModule.id <- thisModule.id.inc();
+		sf.elementId <- thisModule.id.toString();
+	}
 }
 
-rule Answer2SelectionItem {
-	from a: qu!Answer
+rule Answer2_Closed_SelectionItem {
+	from a: qu!Answer(a.openAnswer = false)
 	to si: fo!SelectionItem (
 		label <- a.text
 	)
 }
+
+
+
 
