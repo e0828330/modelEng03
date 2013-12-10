@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ASCII"?>
+<questionnaire:Questionnaire
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:questionnaire="http://www.big.tuwien.ac.at/questionnaire/1.0"
+    title="Library registration">
+  <questionGroups
+      name="Personal data">
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="First name"
+        mandatory="false"/>
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="Last name"
+        mandatory="false"/>
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="E-mail"/>
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="Address"
+        mandatory="false"
+        multiline="true"/>
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="Username"/>
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="Password"/>
+    <questions
+        xsi:type="questionnaire:ClosedEndedQuestion"
+        text="Are you student at a Viennese university?"
+        mandatory="false"
+        type="SingleAnswer">
+      <answers
+          text="Yes"
+          enablesQuestion="//@questionGroups.1/@questions.0"/>
+      <answers
+          text="No"/>
+    </questions>
+  </questionGroups>
+  <questionGroups
+      name="University information">
+    <questions
+        xsi:type="questionnaire:ClosedEndedQuestion"
+        text="At which university are you studying?"
+        mandatory="false"
+        defaultAnswer="//@questionGroups.1/@questions.0/@answers.0">
+      <answers
+          text="University of Vienna"/>
+      <answers
+          text="Vienna University of Technology"/>
+      <answers
+          text="Vienna University of Economics and Business"/>
+      <answers
+          text="University of Natural Resources and Life Science"/>
+      <answers
+          text="Other:"
+          openAnswer="true"/>
+    </questions>
+    <questions
+        xsi:type="questionnaire:LikertScaleQuestion"
+        text="Do you regard the library as important resource for your study?"
+        mandatory="false"
+        lowerBound="-2"
+        upperBound="2"/>
+  </questionGroups>
+</questionnaire:Questionnaire>

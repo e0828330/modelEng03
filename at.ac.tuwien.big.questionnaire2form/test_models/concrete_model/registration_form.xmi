@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ASCII"?>
+<form:Form xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:form="http://www.big.tuwien.ac.at/form/1.0"
+    welcomePage="//@pages.0">
+  <pages nextPage="//@pages.1"
+      title="Personal data">
+    <elements
+        xsi:type="form:Heading"
+        elementId="1"
+        content="Library registration"
+        level="1"/>
+    <elements
+        xsi:type="form:Heading"
+        elementId="2"
+        content="Personal data"
+        level="2"/>
+    <elements
+        xsi:type="form:TextField"
+        elementId="3"
+        label="First name"
+        mandatory="false"/>
+    <elements
+        xsi:type="form:TextField"
+        elementId="4"
+        label="Last name"
+        mandatory="false"/>
+    <elements
+        xsi:type="form:TextField"
+        elementId="5"
+        label="E-mail"/>
+    <elements
+        xsi:type="form:TextField"
+        elementId="7"
+        label="Username"/>
+    <elements
+        xsi:type="form:TextField"
+        elementId="8"
+        label="Password"/>
+    <elements
+        xsi:type="form:TextArea"
+        elementId="6"
+        label="Address"
+        mandatory="false"/>
+    <elements
+        xsi:type="form:SelectionField"
+        elementId="9"
+        label="Are you student at a Viennese university?"
+        mandatory="false">
+      <items
+          label="Yes"/>
+      <items
+          label="No"/>
+    </elements>
+    <visibilityConditions
+        xsi:type="form:SelectionCondition"
+        concernsElements="//@pages.1/@elements.2"
+        item="//@pages.0/@elements.8/@items.0"/>
+  </pages>
+  <pages title="University information"
+      previousPage="//@pages.0">
+    <elements
+        xsi:type="form:Heading"
+        elementId="10"
+        content="Library registration"
+        level="1"/>
+    <elements
+        xsi:type="form:Heading"
+        elementId="11"
+        content="University information"
+        level="2"/>
+    <elements
+        xsi:type="form:SelectionField"
+        elementId="12"
+        label="At which university are you studying?"
+        mandatory="false"
+        selectionFieldType="Checkbox">
+      <items
+          label="University of Vienna"
+          selected="true"/>
+      <items
+          label="Vienna University of Technology"/>
+      <items
+          label="Vienna University of Economics and Business"/>
+      <items
+          label="University of Natural Resources and Life Science"/>
+      <items
+          label="Other:"/>
+    </elements>
+    <elements
+        xsi:type="form:TextField"
+        elementId="14"
+        label="At which university are you studying?: Other:"/>
+    <elements
+        xsi:type="form:SelectionField"
+        elementId="13"
+        label="Do you regard the library as important resource for your study?"
+        mandatory="false"
+        selectionFieldType="Combobox">
+      <items
+          label="-2"/>
+      <items
+          label="-1"/>
+      <items
+          label="0"/>
+      <items
+          label="1"/>
+      <items
+          label="2"/>
+    </elements>
+  </pages>
+</form:Form>

@@ -1,0 +1,10 @@
+-- @path qu=/at.ac.tuwien.big.questionnaire2form/metamodels/questionnaire.ecore
+-- @path fo=/at.ac.tuwien.big.questionnaire2form/metamodels/form.ecore
+
+module questionnaire2form;
+create OUT: fo from IN: qu;
+
+rule Questionnaire2Form {
+	from q: qu!Questionnaire
+	to f: fo!Form ()
+}

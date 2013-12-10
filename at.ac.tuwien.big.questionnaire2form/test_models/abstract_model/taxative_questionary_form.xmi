@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="ASCII"?>
+<form:Form xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:form="http://www.big.tuwien.ac.at/form/1.0"
+    welcomePage="//@pages.0">
+  <pages nextPage="//@pages.1"
+      title="Group 1">
+    <elements
+        xsi:type="form:Heading"
+        elementId="1"
+        content="The title"
+        level="1"/>
+    <elements
+        xsi:type="form:Heading"
+        elementId="13"
+        content="Group 1"
+        level="2"/>
+    <elements
+        xsi:type="form:TextArea"
+        elementId="2"
+        label="Open ended optional multi-line"
+        mandatory="false"/>
+    <elements
+        xsi:type="form:TextField"
+        elementId="3"
+        label="Open ended optional single-line"
+        mandatory="false"/>
+    <elements
+        xsi:type="form:TextArea"
+        elementId="4"
+        label="Open ended mandatory multi-line"/>
+    <elements
+        xsi:type="form:TextField"
+        elementId="5"
+        label="Open ended mandatory single-line"/>
+    <elements
+        xsi:type="form:SelectionField"
+        elementId="6"
+        label="Closed Ended optional question with multiple answerse and a default answer"
+        mandatory="false"
+        selectionFieldType="Checkbox">
+      <items
+          label="answer 1"/>
+      <items
+          label="open answer 2"/>
+      <items
+          label="answer 3"
+          selected="true"/>
+      <items
+          label="open answer 4"/>
+    </elements>
+    <elements
+        xsi:type="form:TextField"
+        elementId="7"
+        label="Closed Ended optional question with multiple answerse and a default answer: open answer 2"
+        mandatory="false"/>
+    <elements
+        xsi:type="form:TextField"
+        elementId="8"
+        label="Closed Ended optional question with multiple answerse and a default answer: open answer 4"
+        mandatory="false"/>
+    <elements
+        xsi:type="form:SelectionField"
+        elementId="9"
+        label="Closed Ended optional question with single answer"
+        mandatory="false">
+      <items
+          label="answer a"/>
+      <items
+          label="answer b"/>
+    </elements>
+    <elements
+        xsi:type="form:SelectionField"
+        elementId="10"
+        label="Likert"
+        selectionFieldType="Combobox">
+      <items
+          label="-5"/>
+      <items
+          label="-4"/>
+      <items
+          label="-3"/>
+      <items
+          label="-2"/>
+      <items
+          label="-1"/>
+      <items
+          label="0"/>
+      <items
+          label="1"/>
+      <items
+          label="2"/>
+      <items
+          label="3"/>
+      <items
+          label="4"/>
+      <items
+          label="5"/>
+    </elements>
+    <visibilityConditions
+        xsi:type="form:SelectionCondition"
+        concernsElements="//@pages.1/@elements.2 //@pages.1/@elements.3"
+        item="//@pages.0/@elements.6/@items.0"/>
+    <visibilityConditions
+        xsi:type="form:SelectionCondition"
+        concernsElements="//@pages.1/@elements.3"
+        item="//@pages.0/@elements.6/@items.3"/>
+  </pages>
+  <pages title="Group 2"
+      previousPage="//@pages.0">
+    <elements
+        xsi:type="form:Heading"
+        elementId="14"
+        content="The title"
+        level="1"/>
+    <elements
+        xsi:type="form:Heading"
+        elementId="15"
+        content="Group 2"
+        level="2"/>
+    <elements
+        xsi:type="form:TextField"
+        elementId="11"
+        label="Open ended question A enabled by answer 1"/>
+    <elements
+        xsi:type="form:SelectionField"
+        elementId="12"
+        label="Likert question"
+        selectionFieldType="Combobox">
+      <items
+          label="1"/>
+      <items
+          label="2"/>
+      <items
+          label="3"/>
+    </elements>
+  </pages>
+</form:Form>

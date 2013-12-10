@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ASCII"?>
+<questionnaire:Questionnaire
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:questionnaire="http://www.big.tuwien.ac.at/questionnaire/1.0"
+    title="The title">
+  <questionGroups
+      name="Group 1">
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="Open ended optional multi-line"
+        mandatory="false"
+        multiline="true"/>
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="Open ended optional single-line"
+        mandatory="false"/>
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="Open ended mandatory multi-line"
+        multiline="true"/>
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="Open ended mandatory single-line"/>
+    <questions
+        xsi:type="questionnaire:ClosedEndedQuestion"
+        text="Closed Ended optional question with multiple answerse and a default answer"
+        mandatory="false"
+        defaultAnswer="//@questionGroups.0/@questions.4/@answers.2">
+      <answers
+          text="answer 1"
+          enablesQuestion="//@questionGroups.1/@questions.0 //@questionGroups.1/@questions.1"/>
+      <answers
+          text="open answer 2"
+          openAnswer="true"/>
+      <answers
+          text="answer 3"/>
+      <answers
+          text="open answer 4"
+          openAnswer="true"
+          enablesQuestion="//@questionGroups.1/@questions.1"/>
+    </questions>
+    <questions
+        xsi:type="questionnaire:ClosedEndedQuestion"
+        text="Closed Ended optional question with single answer"
+        mandatory="false"
+        type="SingleAnswer">
+      <answers
+          text="answer a"/>
+      <answers
+          text="answer b"/>
+    </questions>
+    <questions
+        xsi:type="questionnaire:LikertScaleQuestion"
+        text="Likert"
+        lowerBound="-5"
+        upperBound="5"/>
+  </questionGroups>
+  <questionGroups
+      name="Group 2">
+    <questions
+        xsi:type="questionnaire:OpenEndedQuestion"
+        text="Open ended question A enabled by answer 1"/>
+    <questions
+        xsi:type="questionnaire:LikertScaleQuestion"
+        text="Likert question"
+        lowerBound="1"
+        upperBound="3"/>
+  </questionGroups>
+</questionnaire:Questionnaire>
