@@ -137,7 +137,7 @@ rule makeLikertOption(current: Integer, end: Integer, sf: fo!SelectionField) {
 	)
 	do {
 		sf.items <- si;
-		if (current <= end) {
+		if (current < end) {
 			thisModule.makeLikertOption(current + 1, end, sf);
 		}
 	}
