@@ -49,6 +49,8 @@ rule QuestionGroup2Page {
 		h1.elementId <- thisModule.id.toString();
 		thisModule.id <- thisModule.id.inc();
 		h2.elementId <- thisModule.id.toString();
+		
+		-- Open Answers -> Textfields
 		for (a in qg.questions->select(q | q.oclIsTypeOf(qu!ClosedEndedQuestion))->collect(cq | cq.answers)->flatten()) {
 			if (a.openAnswer) {
 				p.elements <- thisModule.Answer2_Open_Textfield(a);
@@ -81,12 +83,18 @@ rule OpenEndedQuestion_ML_2TextArea {
 	}
 }
 
-rule ClosedEndedQuestion_MA_2SelectionField {
+abstract rule ClosedEndedQuestion2SelectionField {
 	from c: qu!ClosedEndedQuestion (c.answers.size() > 1)
 	to sf: fo!SelectionField (
 		label <- c.text,
-		selectionFieldType <- #Checkbox,
 		items <- c.answers
+	)
+}
+
+rule ClosedEndedQuestion_MA_2SelectionField extends ClosedEndedQuestion2SelectionField {
+	from c: qu!ClosedEndedQuestion (c.answers.size() > 1)
+	to sf: fo!SelectionField (
+		selectionFieldType <- #Checkbox
 	)
 	do {
 		thisModule.id <- thisModule.id.inc();
@@ -94,12 +102,10 @@ rule ClosedEndedQuestion_MA_2SelectionField {
 	}
 }
 
-rule ClosedEndedQuestion_SA_2SelectionField {
+rule ClosedEndedQuestion_SA_2SelectionField extends ClosedEndedQuestion2SelectionField {
 	from c: qu!ClosedEndedQuestion (c.answers.size() = 1)
 	to sf: fo!SelectionField (
-		label <- c.text,
-		selectionFieldType <- #Radio,
-		items <- c.answers
+		selectionFieldType <- #Radio
 	)
 	do {
 		thisModule.id <- thisModule.id.inc();
