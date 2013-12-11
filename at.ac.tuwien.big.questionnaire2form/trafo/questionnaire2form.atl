@@ -60,6 +60,8 @@ rule QuestionGroup2Page {
 	}
 }
 
+-- TODO: enablesQuestion -> selectionConditons
+
 -- OPEN QUESTION
 
 rule OpenEndedQuestion_SL_2TextField {
@@ -152,7 +154,6 @@ rule Answer2_Closed_SelectionItem {
 		label <- a.text
 	)
 }
-
 
 lazy rule Answer2_Open_Textfield {
 	from a: qu!Answer
