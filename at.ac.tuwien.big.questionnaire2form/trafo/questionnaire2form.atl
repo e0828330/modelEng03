@@ -60,6 +60,7 @@ rule QuestionGroup2Page {
 	}
 }
 
+-- OPEN QUESTION
 
 rule OpenEndedQuestion_SL_2TextField {
 	from o: qu!OpenEndedQuestion (not o.multiline)
@@ -85,6 +86,8 @@ rule OpenEndedQuestion_ML_2TextArea {
 	}
 }
 
+-- CLOSED QUESTION
+
 abstract rule ClosedEndedQuestion2SelectionField {
 	from c: qu!ClosedEndedQuestion (c.answers.size() > 1)
 	to sf: fo!SelectionField (
@@ -92,7 +95,6 @@ abstract rule ClosedEndedQuestion2SelectionField {
 		items <- c.answers
 	)
 }
-
 
 rule ClosedEndedQuestion_MA_2SelectionField extends ClosedEndedQuestion2SelectionField {
 	from c: qu!ClosedEndedQuestion (c.type = #MultiAnswer)
@@ -116,6 +118,33 @@ rule ClosedEndedQuestion_SA_2SelectionField extends ClosedEndedQuestion2Selectio
 	}
 }
 
+-- LikertQuestion
+
+rule LikertScaleQuestion2SelectionField {
+	from l: qu!LikertScaleQuestion
+	to sf: fo!SelectionField (
+		selectionFieldType <- #Combobox
+	)
+	do {
+		thisModule.makeLikertOption(l.lowerBound, l.upperBound, sf);
+		thisModule.id <- thisModule.id.inc();
+		sf.elementId <- thisModule.id.toString();
+	}
+}
+
+rule makeLikertOption(current: Integer, end: Integer, sf: fo!SelectionField) {
+	to si: fo!SelectionItem (
+		label <- current.toString()
+	)
+	do {
+		sf.items <- si;
+		if (current <= end) {
+			thisModule.makeLikertOption(current + 1, end, sf);
+		}
+	}
+}
+
+-- ANSWERS
 
 rule Answer2_Closed_SelectionItem {
 	from a: qu!Answer (not a.openAnswer)
