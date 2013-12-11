@@ -56,20 +56,8 @@ rule QuestionGroup2Page {
 				p.elements <- thisModule.Answer2_Open_Textfield(a);
 			}
 		}
-		
-		--- WTF
-		for (e in p.elements) {
-			if (e.oclIsTypeOf(fo!SelectionCondition)) {
-				e.page <- p;
-				e.debug('WTF:');
-				e.debug(e);
-				e.debug(p);
-			}
-		}
-		
 	}
 }
-
 
 -- OPEN QUESTION
 
@@ -158,7 +146,7 @@ rule makeLikertOption(current: Integer, end: Integer, sf: fo!SelectionField) {
 -- ANSWERS
 
 rule Answer2_Closed_SelectionItem {
-	from a: qu!Answer (not a.openAnswer and a.enablesQuestion.size() = 0)
+	from a: qu!Answer (a.enablesQuestion.size() = 0)
 	to si: fo!SelectionItem (
 		label <- a.text
 	)
@@ -168,18 +156,15 @@ rule Answer2_Closed_SelectionItem {
 
 
 rule Answer2_Closed_SelectionItem_and_Cond {
-	from a: qu!Answer (not a.openAnswer and a.enablesQuestion.size() > 0)
+	from a: qu!Answer (a.enablesQuestion.size() > 0)
 	to si: fo!SelectionItem (
 		label <- a.text
 	),
 	sc: fo!SelectionCondition (
 		item <- si,
-		concernsElements <- a.enablesQuestion
+		concernsElements <- a.enablesQuestion,
+		page <- a.refImmediateComposite().refImmediateComposite()
 	)
-	do {
-		si.refImmediateComposite().refImmediateComposite().elements <- sc;
-		--- TODO HOW TO SET THE PAGE!!?
-	}
 }
 
 lazy rule Answer2_Open_Textfield {
@@ -187,11 +172,11 @@ lazy rule Answer2_Open_Textfield {
 	to si: fo!TextField (
 		label <- a.text
 	)
-
 	do {
 		thisModule.id <- thisModule.id.inc();
 		si.elementId <- thisModule.id.toString();
 	}
 }
+
 
 
