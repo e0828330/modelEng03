@@ -20,7 +20,7 @@ rule QuestionGroup2Page {
 		title <- qg.name,		
 		elements <- h1,
 		elements <- h2,
-		elements <- qg.questions,		
+		elements <- qg.questions,
 		allNextPages <- p.refImmediateComposite().pages ->
 						select(q | q.refImmediateComposite().pages -> indexOf(q)  >
 								   q.refImmediateComposite().pages -> indexOf(p)),
@@ -50,8 +50,8 @@ rule QuestionGroup2Page {
 		thisModule.id <- thisModule.id.inc();
 		h2.elementId <- thisModule.id.toString();
 		
-		-- Open Answers -> Textfields
 		for (a in qg.questions->select(q | q.oclIsTypeOf(qu!ClosedEndedQuestion))->collect(cq | cq.answers)->flatten()) {
+			-- Open Answers -> Textfields
 			if (a.openAnswer) {
 				p.elements <- thisModule.Answer2_Open_Textfield(a);
 			}
@@ -91,12 +91,19 @@ abstract rule ClosedEndedQuestion2SelectionField {
 	)
 }
 
+
 rule ClosedEndedQuestion_MA_2SelectionField extends ClosedEndedQuestion2SelectionField {
 	from c: qu!ClosedEndedQuestion (c.answers.size() > 1)
 	to sf: fo!SelectionField (
 		selectionFieldType <- #Checkbox
+	),
+	-- TODO: WTF!!!
+	sc: fo!SelectionCondition (
 	)
 	do {
+		sf.refImmediateComposite().elements <- sc;
+		sc.page <- sf.refImmediateComposite();
+		c.debug(sf.refImmediateComposite());
 		thisModule.id <- thisModule.id.inc();
 		sf.elementId <- thisModule.id.toString();
 	}
@@ -113,6 +120,7 @@ rule ClosedEndedQuestion_SA_2SelectionField extends ClosedEndedQuestion2Selectio
 	}
 }
 
+
 rule Answer2_Closed_SelectionItem {
 	from a: qu!Answer (not a.openAnswer)
 	to si: fo!SelectionItem (
@@ -120,19 +128,17 @@ rule Answer2_Closed_SelectionItem {
 	)
 }
 
+
 lazy rule Answer2_Open_Textfield {
 	from a: qu!Answer
 	to si: fo!TextField (
 		label <- a.text
 	)
+
 	do {
 		thisModule.id <- thisModule.id.inc();
 		si.elementId <- thisModule.id.toString();
 	}
 }
-
-
-
-
 
 
