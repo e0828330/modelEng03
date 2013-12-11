@@ -16,7 +16,7 @@ rule Questionnaire2Form {
 
 rule QuestionGroup2Page {
 	from qg: qu!QuestionGroup
-	to p: fo!Page(
+	to p: fo!Page (
 		title <- qg.name,		
 		elements <- h1,
 		elements <- h2,
@@ -57,10 +57,19 @@ rule QuestionGroup2Page {
 			}
 		}
 		
+		--- WTF
+		for (e in p.elements) {
+			if (e.oclIsTypeOf(fo!SelectionCondition)) {
+				e.page <- p;
+				e.debug('WTF:');
+				e.debug(e);
+				e.debug(p);
+			}
+		}
+		
 	}
 }
 
--- TODO: enablesQuestion -> selectionConditons
 
 -- OPEN QUESTION
 
@@ -149,10 +158,28 @@ rule makeLikertOption(current: Integer, end: Integer, sf: fo!SelectionField) {
 -- ANSWERS
 
 rule Answer2_Closed_SelectionItem {
-	from a: qu!Answer (not a.openAnswer)
+	from a: qu!Answer (not a.openAnswer and a.enablesQuestion.size() = 0)
 	to si: fo!SelectionItem (
 		label <- a.text
 	)
+}
+
+-- TODO: enablesQuestion -> selectionConditons
+
+
+rule Answer2_Closed_SelectionItem_and_Cond {
+	from a: qu!Answer (not a.openAnswer and a.enablesQuestion.size() > 0)
+	to si: fo!SelectionItem (
+		label <- a.text
+	),
+	sc: fo!SelectionCondition (
+		item <- si,
+		concernsElements <- a.enablesQuestion
+	)
+	do {
+		si.refImmediateComposite().refImmediateComposite().elements <- sc;
+		--- TODO HOW TO SET THE PAGE!!?
+	}
 }
 
 lazy rule Answer2_Open_Textfield {
