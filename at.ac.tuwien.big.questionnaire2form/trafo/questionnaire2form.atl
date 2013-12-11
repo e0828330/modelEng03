@@ -10,7 +10,8 @@ helper context Integer def: inc() : Integer = self + 1;
 rule Questionnaire2Form {
 	from q: qu!Questionnaire
 	to f: fo!Form (
-		pages <- q.questionGroups
+		pages <- q.questionGroups,
+		welcomePage <- q.questionGroups.first()
 	)
 }
 
@@ -91,7 +92,8 @@ abstract rule ClosedEndedQuestion2SelectionField {
 	from c: qu!ClosedEndedQuestion (c.answers.size() > 1)
 	to sf: fo!SelectionField (
 		label <- c.text,
-		items <- c.answers
+		items <- c.answers,
+		mandatory <- c.mandatory
 	)
 }
 
@@ -148,7 +150,9 @@ rule makeLikertOption(current: Integer, end: Integer, sf: fo!SelectionField) {
 rule Answer2_Closed_SelectionItem {
 	from a: qu!Answer (a.enablesQuestion.size() = 0)
 	to si: fo!SelectionItem (
-		label <- a.text
+		label <- a.text,
+		selected <- a.refImmediateComposite().defaultAnswer = a
+		
 	)
 }
 
