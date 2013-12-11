@@ -125,7 +125,8 @@ rule LikertScaleQuestion2SelectionField {
 	from l: qu!LikertScaleQuestion
 	to sf: fo!SelectionField (
 		selectionFieldType <- #Combobox,
-		label <- l.text
+		label <- l.text,
+		mandatory <- l.mandatory
 	)
 	do {
 		thisModule.makeLikertOption(l.lowerBound, l.upperBound, sf);
@@ -152,18 +153,15 @@ rule Answer2_Closed_SelectionItem {
 	from a: qu!Answer (a.enablesQuestion.size() = 0)
 	to si: fo!SelectionItem (
 		label <- a.text,
-		selected <- a.refImmediateComposite().defaultAnswer = a
-		
+		selected <- a.refImmediateComposite().defaultAnswer = a	
 	)
 }
-
--- TODO: enablesQuestion -> selectionConditons
-
 
 rule Answer2_Closed_SelectionItem_and_Cond {
 	from a: qu!Answer (a.enablesQuestion.size() > 0)
 	to si: fo!SelectionItem (
-		label <- a.text
+		label <- a.text,
+		selected <- a.refImmediateComposite().defaultAnswer = a
 	),
 	sc: fo!SelectionCondition (
 		item <- si,
@@ -175,7 +173,8 @@ rule Answer2_Closed_SelectionItem_and_Cond {
 lazy rule Answer2_Open_Textfield {
 	from a: qu!Answer
 	to si: fo!TextField (
-		label <- a.text
+		label <- a.text,
+		mandatory <- a.refImmediateComposite().mandatory
 	)
 	do {
 		thisModule.id <- thisModule.id.inc();
