@@ -119,12 +119,13 @@ rule ClosedEndedQuestion_SA_2SelectionField extends ClosedEndedQuestion2Selectio
 	}
 }
 
--- LikertQuestion
+-- LikertScaleQuestion
 
 rule LikertScaleQuestion2SelectionField {
 	from l: qu!LikertScaleQuestion
 	to sf: fo!SelectionField (
-		selectionFieldType <- #Combobox
+		selectionFieldType <- #Combobox,
+		label <- l.text
 	)
 	do {
 		thisModule.makeLikertOption(l.lowerBound, l.upperBound, sf);
