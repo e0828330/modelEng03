@@ -56,8 +56,10 @@ rule QuestionGroup2Page {
 				p.elements <- thisModule.Answer2_Open_Textfield(a);
 			}
 		}
+		
 	}
 }
+
 
 rule OpenEndedQuestion_SL_2TextField {
 	from o: qu!OpenEndedQuestion (not o.multiline)
@@ -93,24 +95,18 @@ abstract rule ClosedEndedQuestion2SelectionField {
 
 
 rule ClosedEndedQuestion_MA_2SelectionField extends ClosedEndedQuestion2SelectionField {
-	from c: qu!ClosedEndedQuestion (c.answers.size() > 1)
+	from c: qu!ClosedEndedQuestion (c.type = #MultiAnswer)
 	to sf: fo!SelectionField (
 		selectionFieldType <- #Checkbox
-	),
-	-- TODO: WTF!!!
-	sc: fo!SelectionCondition (
 	)
 	do {
-		sf.refImmediateComposite().elements <- sc;
-		sc.page <- sf.refImmediateComposite();
-		c.debug(sf.refImmediateComposite());
 		thisModule.id <- thisModule.id.inc();
 		sf.elementId <- thisModule.id.toString();
 	}
 }
 
 rule ClosedEndedQuestion_SA_2SelectionField extends ClosedEndedQuestion2SelectionField {
-	from c: qu!ClosedEndedQuestion (c.answers.size() = 1)
+	from c: qu!ClosedEndedQuestion (c.type = #SingleAnswer)
 	to sf: fo!SelectionField (
 		selectionFieldType <- #Radio
 	)
