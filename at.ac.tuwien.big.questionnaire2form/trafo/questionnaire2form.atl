@@ -20,7 +20,7 @@ rule QuestionGroup2Page {
 		title <- qg.name,		
 		elements <- h1,
 		elements <- h2,
-		elements <- qg.questions,
+		elements <- qg.questions,		
 		allNextPages <- p.refImmediateComposite().pages ->
 						select(q | q.refImmediateComposite().pages -> indexOf(q)  >
 								   q.refImmediateComposite().pages -> indexOf(p)),
@@ -49,12 +49,16 @@ rule QuestionGroup2Page {
 		h1.elementId <- thisModule.id.toString();
 		thisModule.id <- thisModule.id.inc();
 		h2.elementId <- thisModule.id.toString();
+		for (a in qg.questions->select(q | q.oclIsTypeOf(qu!ClosedEndedQuestion))->collect(cq | cq.answers)->flatten()) {
+			if (a.openAnswer) {
+				p.elements <- thisModule.Answer2_Open_Textfield(a);
+			}
+		}
 	}
 }
 
-
 rule OpenEndedQuestion_SL_2TextField {
-	from o: qu!OpenEndedQuestion (o.multiline = false)
+	from o: qu!OpenEndedQuestion (not o.multiline)
 	to tf: fo!TextField(
 		label <- o.text,
 		mandatory <- o.mandatory
@@ -66,7 +70,7 @@ rule OpenEndedQuestion_SL_2TextField {
 }
 
 rule OpenEndedQuestion_ML_2TextArea {
-	from o: qu!OpenEndedQuestion (o.multiline = true)
+	from o: qu!OpenEndedQuestion (o.multiline)
 	to ta: fo!TextArea(
 		label <- o.text,
 		mandatory <- o.mandatory
@@ -104,11 +108,24 @@ rule ClosedEndedQuestion_SA_2SelectionField {
 }
 
 rule Answer2_Closed_SelectionItem {
-	from a: qu!Answer(a.openAnswer = false)
+	from a: qu!Answer (not a.openAnswer)
 	to si: fo!SelectionItem (
 		label <- a.text
 	)
 }
+
+lazy rule Answer2_Open_Textfield {
+	from a: qu!Answer
+	to si: fo!TextField (
+		label <- a.text
+	)
+	do {
+		thisModule.id <- thisModule.id.inc();
+		si.elementId <- thisModule.id.toString();
+	}
+}
+
+
 
 
 
