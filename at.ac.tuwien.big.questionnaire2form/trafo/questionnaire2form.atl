@@ -173,8 +173,8 @@ rule Answer2_Closed_SelectionItem_and_Cond {
 lazy rule Answer2_Open_Textfield {
 	from a: qu!Answer
 	to si: fo!TextField (
-		label <- a.text,
-		mandatory <- a.refImmediateComposite().mandatory
+		label <- a.refImmediateComposite().text,
+		mandatory <- true -- https://tuwel.tuwien.ac.at/mod/forum/discuss.php?d=47368#p140086
 	)
 	do {
 		thisModule.id <- thisModule.id.inc();

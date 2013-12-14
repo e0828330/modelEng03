@@ -507,12 +507,11 @@
 		<constant value="Answer2_Open_Textfield"/>
 		<constant value="Mqu!Answer;"/>
 		<constant value="176:12-176:13"/>
-		<constant value="176:12-176:18"/>
-		<constant value="176:3-176:18"/>
-		<constant value="177:16-177:17"/>
-		<constant value="177:16-177:41"/>
-		<constant value="177:16-177:51"/>
-		<constant value="177:3-177:51"/>
+		<constant value="176:12-176:37"/>
+		<constant value="176:12-176:42"/>
+		<constant value="176:3-176:42"/>
+		<constant value="177:16-177:20"/>
+		<constant value="177:3-177:20"/>
 		<constant value="175:5-178:3"/>
 		<constant value="180:3-180:13"/>
 		<constant value="180:20-180:30"/>
@@ -2295,14 +2294,13 @@
 			<dup/>
 			<getasm/>
 			<load arg="22"/>
+			<call arg="128"/>
 			<get arg="277"/>
 			<call arg="33"/>
 			<set arg="278"/>
 			<dup/>
 			<getasm/>
-			<load arg="22"/>
-			<call arg="128"/>
-			<get arg="279"/>
+			<pusht/>
 			<call arg="33"/>
 			<set arg="279"/>
 			<pop/>
@@ -2321,28 +2319,27 @@
 		<linenumbertable>
 			<lne id="505" begin="25" end="25"/>
 			<lne id="506" begin="25" end="26"/>
-			<lne id="507" begin="23" end="28"/>
-			<lne id="508" begin="31" end="31"/>
-			<lne id="509" begin="31" end="32"/>
-			<lne id="510" begin="31" end="33"/>
-			<lne id="511" begin="29" end="35"/>
-			<lne id="512" begin="22" end="36"/>
+			<lne id="507" begin="25" end="27"/>
+			<lne id="508" begin="23" end="29"/>
+			<lne id="509" begin="32" end="32"/>
+			<lne id="510" begin="30" end="34"/>
+			<lne id="511" begin="22" end="35"/>
+			<lne id="512" begin="36" end="36"/>
 			<lne id="513" begin="37" end="37"/>
-			<lne id="514" begin="38" end="38"/>
-			<lne id="515" begin="38" end="39"/>
-			<lne id="516" begin="38" end="40"/>
-			<lne id="517" begin="37" end="41"/>
+			<lne id="514" begin="37" end="38"/>
+			<lne id="515" begin="37" end="39"/>
+			<lne id="516" begin="36" end="40"/>
+			<lne id="517" begin="41" end="41"/>
 			<lne id="518" begin="42" end="42"/>
-			<lne id="519" begin="43" end="43"/>
-			<lne id="520" begin="43" end="44"/>
-			<lne id="521" begin="43" end="45"/>
-			<lne id="522" begin="42" end="46"/>
-			<lne id="523" begin="37" end="46"/>
+			<lne id="519" begin="42" end="43"/>
+			<lne id="520" begin="42" end="44"/>
+			<lne id="521" begin="41" end="45"/>
+			<lne id="522" begin="36" end="45"/>
 		</linenumbertable>
 		<localvariabletable>
-			<lve slot="2" name="446" begin="18" end="47"/>
-			<lve slot="0" name="20" begin="0" end="47"/>
-			<lve slot="1" name="263" begin="0" end="47"/>
+			<lve slot="2" name="446" begin="18" end="46"/>
+			<lve slot="0" name="20" begin="0" end="46"/>
+			<lve slot="1" name="263" begin="0" end="46"/>
 		</localvariabletable>
 	</operation>
 </asm>
